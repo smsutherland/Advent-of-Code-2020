@@ -1,14 +1,16 @@
 with open("input.txt") as input:
-    inputList = input.read().splitlines()
-    for i in range(len(inputList)):
-        inputList[i] = int(inputList[i])
+    inputList = [int(x) for x in input.read().splitlines()]
     
-    for i in inputList:
-        if inputList.count(2020 - i) > 0:
-            print(f"{i} * {2020 - i} = {i*(2020 - i)}")
-    
-    for i in inputList:
-        remainder = 2020 - i
-        for j in inputList:
-            if inputList.count(remainder - j) > 0:
-                print(f"{i} * {j} * {remainder - j} = {i*j*(remainder-j)}")
+for i in inputList:
+    if (2020 - i) in inputList:
+        print(f"{i} * {2020 - i} = {i*(2020 - i)}")
+        break
+# part 1: 898299
+
+for i in inputList:
+    remainder = 2020 - i
+    for j in inputList:
+        if (remainder - j) in inputList:
+            print(f"{i} * {j} * {remainder - j} = {i*j*(remainder-j)}")
+            exit()
+# part 2: 143933922

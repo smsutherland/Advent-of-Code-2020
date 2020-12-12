@@ -1,16 +1,19 @@
 with open("input.txt") as input:
     inputList = input.read().splitlines()
-    numValid1 = 0
-    numValid2 = 0
-    for i in inputList:
-        pair = tuple(i.split(": "))
-        a = pair[0].split(" ")
-        b = a[0].split("-")
-        pair = ((int(b[0]), int(b[1]), a[1]), pair[1])
-        passNum = pair[1].count(pair[0][2])
-        if passNum >= pair[0][0] and passNum <= pair[0][1]:
-            numValid1 += 1
-        if (pair[1][pair[0][0]-1] == pair[0][2]) ^ (pair[1][pair[0][1]-1] == pair[0][2]):
-            numValid2 += 1
-    print(numValid1)
-    print(numValid2)
+
+numValid1 = 0
+numValid2 = 0
+for line in inputList:
+    policy, password = line.split(": ")
+    a = policy.split(" ")
+    policyNums = [int(x) for x in a[0].split("-")]
+    policyLetter = a[1]
+    passNum = password.count(policyLetter)
+    if policyNums[0] <= passNum <= policyNums[1]:
+        numValid1 += 1
+    if (password[policyNums[0]-1] == policyLetter) ^ (password[policyNums[1]-1] == policyLetter):
+        numValid2 += 1
+print(numValid1)
+print(numValid2)
+# part 1: 591
+# part 2: 335

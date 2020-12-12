@@ -1,48 +1,28 @@
 with open("input.txt") as input:
     inputList = input.read().splitlines()
 
-bags = {}
-for line in inputList:
-    line = line[:-1]
-    theseBags = line.split(" contain ")
-    contains = theseBags[1].split(", ")
-    contains = [x[2:] for x in contains]
-    if contains == [" other bags"]:
-        contains = []
-    for i in range(len(contains)):
-        if contains[i][-1] != 's':
-            contains[i] = contains[i] + "s"
-        
-    bags[theseBags[0]] = contains
-#print(bags)
-
-def canContain(bag):
-    if "shiny gold bags" in bags[bag]:
-        return True
-    for nextBag in bags[bag]:
-        if canContain(nextBag):
-            return True
-    return False
-
-totalNum = 0
-for bag in bags.keys():
-    if canContain(bag):
-        totalNum += 1
-print(totalNum)
 
 bags = {}
 for line in inputList:
     line = line[:-1]
-    theseBags = line.split(" contain ")
-    contains = theseBags[1].split(", ")
+    container, contains = line.split(" contain ")
+    contains = contains.split(", ")
     if contains == ["no other bags"]:
         contains = []
-    print(contains)
     for i in range(len(contains)):
         if contains[i][-1] != 's':
-            contains[i] = contains[i] + "s"
+            contains[i] += "s"
         
-    bags[theseBags[0]] = contains
+    bags[container] = contains
+
+def canContain(bag):
+    for containedBag in bags[bag]:
+        if containedBag[2:] == "shiny gold bags":
+            return True
+    for nextBag in bags[bag]:
+        if canContain(nextBag[2:]):
+            return True
+    return False
 
 def numContained(bag):
     contained = bags[bag]
@@ -53,4 +33,8 @@ def numContained(bag):
         total += num * (numContained(bagName)+1)
     return total
 
+print(len([x for x in bags.keys() if canContain(x)]))
+# part 1: 233
+
 print(numContained("shiny gold bags"))
+# part 2: 421550

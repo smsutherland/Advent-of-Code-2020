@@ -12,12 +12,11 @@ while lineNumber not in linesDone:
     num = int(line[4:])
     if op == "acc":
         acc += num
-        lineNumber += 1
     if op == "jmp":
-        lineNumber += num
-    if op == "nop":
-        lineNumber += 1
+        lineNumber += num - 1
+    lineNumber += 1
 print(acc)
+# part 1: 1563
 
 def executeCode(code):
     lineNumber = 0
@@ -52,3 +51,4 @@ for i in range(len(inputList)):
         newInputList[i] = "nop " + line[4:]
     if executeCode(newInputList):
         break
+# part 2: 767
