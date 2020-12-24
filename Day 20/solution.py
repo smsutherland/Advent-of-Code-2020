@@ -1,5 +1,3 @@
-import copy
-
 with open("input.txt") as input:
     inputList = input.read().split("\n\n")
 
